@@ -53,19 +53,18 @@ export default function SignIn(props) {
   const [password, setpassword] = useState();
   const [emailError, setEmailError] = useState(true);
   const [passwordError, setPasswordError] = useState(true);
-  const [validation, setValidation] = useState(false);
+  const [passwordValidation, setpasswordValidation] = useState(false);
 
-
+  const [emailValidation, setEmailValidation] = useState(false);
 
   function handleEmail(e) {
     setEmail(e);
 
     if (e.length > 0) {
       setEmailError(false);
-
     } else {
       setEmailError(true);
-      setValidation(false);
+      setEmailValidation(false);
     }
   }
 
@@ -74,19 +73,26 @@ export default function SignIn(props) {
 
     if (e.length > 0) {
       setPasswordError(false);
-   
     } else {
       setPasswordError(true);
-      setValidation(false);
+      setEmailValidation(false);
     }
   }
 
   function handleSubmit() {
+    if (json.username == email) {
+      setEmailValidation(false);
+    } else {
+      setEmailValidation(true);
+    }
+    if (json.password == password) {
+      setpasswordValidation(false);
+    } else {
+      setpasswordValidation(true);
+    }
+
     if (json.username == email && json.password == password) {
       props.history.push("/ListDetails");
-      setValidation(false);
-    } else {
-      setValidation(true);
     }
   }
   const classes = useStyles();
@@ -136,9 +142,9 @@ export default function SignIn(props) {
           control={<Checkbox value="remember" color="primary" />}
           label="Remember me"
         />
-      
-            {validation ? <p>Please check UserName/Password</p> : ""}
-       
+
+        {emailValidation ? <p>User Name is not matiching</p> : ""}
+        {passwordValidation ? <p>Password is not matiching</p> : ""}
 
         <Button
           type="submit"
