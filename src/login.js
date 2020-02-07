@@ -14,6 +14,17 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import json from "./JsonData/login.json";
+import { connect } from "react-redux";
+import { loginAction } from "./actions/loginAction";
+
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+
+  loginAction: () => dispatch(loginAction())
+});
 
 function Copyright() {
   return (
@@ -48,7 +59,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn(props) {
+function SignIn(props) {
+
+  function loginAction(event) {
+    props.loginAction();
+    
+  }
+
+
   const [email, setEmail] = useState();
   const [password, setpassword] = useState();
   const [emailError, setEmailError] = useState(true);
@@ -58,6 +76,7 @@ export default function SignIn(props) {
   const [emailValidation, setEmailValidation] = useState(false);
 
   function handleEmail(e) {
+
     setEmail(e);
 
     if (e.length > 0) {
@@ -152,7 +171,7 @@ export default function SignIn(props) {
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={handleSubmit}
+          onClick={loginAction}
         >
           Sign In
         </Button>
@@ -175,3 +194,5 @@ export default function SignIn(props) {
     </Container>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
