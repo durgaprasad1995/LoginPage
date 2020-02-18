@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -13,16 +13,16 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import json from "./JsonData/login.json";
+import json from "./JsonData/UserDetails.json";
 import { connect } from "react-redux";
-import { loginAction } from "./actions/loginAction";
+// import { loginAction } from "./actions/loginAction";
+// import configureStore from "./store"
 
 const mapStateToProps = state => ({
   ...state
 });
 
 const mapDispatchToProps = dispatch => ({
-
   loginAction: () => dispatch(loginAction())
 });
 
@@ -60,23 +60,28 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SignIn(props) {
-
-  function loginAction(event) {
-    props.loginAction();
-    
-  }
-
-
   const [email, setEmail] = useState();
   const [password, setpassword] = useState();
   const [emailError, setEmailError] = useState(true);
   const [passwordError, setPasswordError] = useState(true);
   const [passwordValidation, setpasswordValidation] = useState(false);
-
   const [emailValidation, setEmailValidation] = useState(false);
+  const [userDetails, setUserDetails] = useState([]);
+
+  useEffect(() => {
+    // props.loginAction();
+    // userDetails.push(props.loginAction())
+    // console.log("userDetails",   configureStore.loginAction);   
+
+  }, []);
+
+  function loginAction(event) {
+    props.loginAction() 
+  
+    console.log("userDetails",   JSON.stringify(props));   
+  }
 
   function handleEmail(e) {
-
     setEmail(e);
 
     if (e.length > 0) {
